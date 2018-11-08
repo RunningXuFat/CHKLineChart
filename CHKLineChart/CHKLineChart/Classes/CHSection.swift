@@ -508,7 +508,18 @@ extension CHSection {
                     continue  //不是量线
                 }
                 
-                title += model.title + ": " + item.vol.ch_toString(maxF: self.decimal) + "  "
+                var volumStr = ""
+                let value = item.vol
+                if value / 1000000000 > 1 {
+                    volumStr = (value / 1000000000).ch_toString(maxF: self.decimal) + "B"
+                } else if value / 1000000 > 1 {
+                    volumStr = (value / 1000000).ch_toString(maxF: self.decimal) + "M"
+                } else if value / 1000 > 1 {
+                    volumStr = (value / 1000).ch_toString(maxF: self.decimal) + "K"
+                } else {
+                    volumStr = value.ch_toString(maxF: self.decimal)
+                }
+                title += model.title + ": " + volumStr + "  " //item.vol.ch_toString(maxF: self.decimal)
             default:
                 if item.value != nil {
                     title += model.title + ": " + item.value!.ch_toString(maxF: self.decimal) + "  "
